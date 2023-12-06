@@ -4,12 +4,12 @@ This plugin adds an option to filter your current buffer by some text/pattern. I
 ## Installation
 - Install [TPM](https://github.com/tmux-plugins/tpm).
 - Add the following line to the top of your tmux file:
-```tmux
-    set -g @plugin 'MaximilianGaedig/tmux-filter'
+```bash
+set -g @plugin 'MaximilianGaedig/tmux-filter'
 ```
 
 ## Usage
-- press <prefix> F
+- press `prefix` + <kbd>F</kbd>
 - enter the grep pattern you want to search by
 - a new window opens which shows you all the lines in the buffer that match the pattern
 - there you can use normal tmux copy mode to scroll up/down and copy and whatever you want to do
