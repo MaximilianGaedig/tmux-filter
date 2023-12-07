@@ -11,12 +11,12 @@ TMP_FILE="/tmp/tmux-pane-content-$(date +%s).log"
 
 touch "$TMP_FILE"
 
-# Save existing
-tmux capture-pane -p -t "$TMUX_PANE" | grep --color=always -i "$PATTERN" > "$TMP_FILE"
+# Capture whole pane
+tmux capture-pane -p -S - -e -t "$TMUX_PANE" | grep --color=always -i "$PATTERN" > "$TMP_FILE"
 
 # Start piping
-tmux pipe-pane -o -t "$TMUX_PANE" "grep --color=always '"$PATTERN"' >> $TMP_FILE"
+tmux pipe-pane -o -t "$TMUX_PANE" "cat | grep --color=always -i \""$PATTERN"\" >> $TMP_FILE"
 
 # Create a new window, after close stop piping and remove the tmp file
-tmux new-window "trap 'tmux pipe-pane -t "$TMUX_PANE"; ls -al $TMP_FILE; rm -f $TMP_FILE;ls -al $TMP_FILE;exit 1' SIGINT; tail -n +1 -f \"${TMP_FILE}\""
+tmux new-window "trap 'tmux pipe-pane -t "$TMUX_PANE"; rm -f $TMP_FILE; exit 1' SIGINT; tail -n +1 -f \"${TMP_FILE}\""
 
